@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,28 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Global Background */}
+        <div className="pointer-events-none fixed inset-0 -z-10 w-full h-full">
+          <div
+            className={
+              [
+                "absolute inset-0",
+                "[background-size:20px_20px]",
+                "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+                "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+              ].join(" ")
+            }
+          />
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,black)] dark:bg-black"></div>
+        </div>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
         {children}
+        </ThemeProvider>
       </body>
     </html>
   );

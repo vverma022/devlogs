@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import TaskBoard from './TaskBoard';
-import { Loader, Github, Activity, TrendingUp } from 'lucide-react';
+import { Github, Activity, TrendingUp } from 'lucide-react';
+import { RainbowButton } from '@/components/magicui/rainbow-button';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,34 +27,29 @@ const HeroSection = () => {
       
       <div className={`relative z-10 max-w-4xl text-center space-y-6 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="flex justify-center">
-          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full bg-muted text-primary">
-            <span className="flex h-2 w-2 rounded-full bg-primary"></span>
-            Connected to GitHub API
-            <Github className="h-3 w-3 text-primary" />
+          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full bg-muted text-black dark:text-white">
+            <span className="flex h-2 w-2 rounded-full bg-green-600 animate-pulse"></span>
+            Connected to GitHub
           </span>
         </div>
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-foreground">
-          Track your <span className="text-primary">coding</span> journey
+          Supercharge Your Coding Story: <span className="text-primary">Every Commit Counts</span>
         </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
-          Connect DevLogs to your GitHub repositories and discover insights about your coding patterns, productivity trends, and development activity.
+          Instantly visualize your progress, celebrate your wins, and unlock insights from your GitHub journey. Make every line of code matter!
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 items-center">
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px]">
-            <Github className="mr-2 h-4 w-4" />
-            Connect GitHub
-          </Button>
-          <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px]">
-            <Activity className="mr-2 h-4 w-4" />
-            View Demo
-          </Button>
+          <RainbowButton size="lg" className='text-white dark:text-black '>
+            <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+            Get Started
+          </RainbowButton>
         </div>
         
         <div className="pt-6 text-sm text-muted-foreground font-mono">
-          $ git clone your-insights.git
+          $ git clone your-insights.today
         </div>
       </div>
       
