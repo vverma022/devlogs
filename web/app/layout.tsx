@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import { Providers } from "@/components/common/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,32 +24,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Global Background */}
-        <div className="pointer-events-none fixed inset-0 -z-10 w-full h-full">
+        <div className="pointer-events-none fixed inset-0 -z-10 h-full w-full">
           <div
-            className={
-              [
-                "absolute inset-0",
-                "[background-size:20px_20px]",
-                "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-                "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
-              ].join(" ")
-            }
+            className={[
+              'absolute inset-0',
+              '[background-size:20px_20px]',
+              '[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]',
+              'dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]',
+            ].join(' ')}
           />
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,black)] dark:bg-black"></div>
+          <div className="pointer-events-none absolute inset-0 bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
         </div>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-        {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

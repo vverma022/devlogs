@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TaskBoard from './TaskBoard';
 import { Github, Activity, TrendingUp } from 'lucide-react';
 import { RainbowButton } from '@/components/magicui/rainbow-button';
+import GithubConnectDialog from '../common/GithubConnectDialog';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,7 +17,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative w-full py-12 md:py-20 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden bg-background">
+    <section className="relative w-full py-12 md:py-20 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden">
       {/* Cosmic particle effect (background dots) */}
       <div className="absolute inset-0 cosmic-grid opacity-30"></div>
       
@@ -42,10 +43,13 @@ const HeroSection = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 items-center">
-          <RainbowButton size="lg" className='text-white dark:text-black '>
-            <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-            Get Started
-          </RainbowButton>
+          <GithubConnectDialog
+            trigger={
+              <RainbowButton size="lg" className="gap-2 text-white dark:text-black">
+                Get Started
+              </RainbowButton>
+            }
+          />
         </div>
         
         <div className="pt-6 text-sm text-muted-foreground font-mono">
