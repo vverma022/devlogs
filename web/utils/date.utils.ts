@@ -31,3 +31,7 @@ export const isLastYear = (date: Date | string): boolean => {
 
 	return isWithinInterval(new Date(date), { start: lastYearStart, end: lastYearEnd });
 };
+
+export const getMonthYear = (date: Date = new Date()): string => {
+	return date.toLocaleString('default', { month: 'long', year: 'numeric' });
+};

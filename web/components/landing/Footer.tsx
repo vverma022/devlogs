@@ -1,5 +1,7 @@
 import React from 'react';
 import { ModeToggle } from "../common/theme-toggle";
+import Logo from "../common/Logo";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -7,6 +9,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col items-center md:items-start gap-4">
+            <Logo h={28} w={28} />
             <p className="text-muted-foreground text-sm font-mono text-center md:text-left">
               GitHub analytics for developers who code.
             </p>
@@ -30,8 +33,8 @@ const Footer = () => {
         <div className="mt-8 pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center text-muted-foreground text-sm">
           <div className="font-mono">© 2025 DevLogs. All rights reserved.</div>
           <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-foreground transition-colors font-mono">Privacy</a>
-            <a href="#" className="hover:text-foreground transition-colors font-mono">Terms</a>
+            <Link href="/privacy" className="hover:text-foreground transition-colors font-mono">Privacy</Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors font-mono">Terms</Link>
           </div>
         </div>
       </div>
