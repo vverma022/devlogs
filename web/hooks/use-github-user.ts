@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { GitHubUser } from '@/types/github.types';
+import { githubUserSchema } from '@/types/schemas';
 
 interface UseGitHubUserReturn {
   githubUser: GitHubUser | null;
@@ -12,53 +13,47 @@ interface UseGitHubUserReturn {
 const fetchGitHubUser = async (token: string): Promise<GitHubUser> => {
   const response = await fetch('https://api.github.com/user', {
     headers: {
-      'Authorization': `Bearer ${token}`,
       'Accept': 'application/vnd.github.v3+json',
+      'Authorization': `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    console.log('GitHub API error:', errorText);
-    throw new Error(`Failed to fetch GitHub data: ${response.status} ${response.statusText}`);
+    throw new Error(
+      response.status === 401 
+        ? 'GitHub authentication failed' 
+        : `Failed to fetch user: ${response.status}`
+    );
   }
 
   const data = await response.json();
-  const parsed = githubUserSchema.safeParse(data);
-  if (!parsed.success) {
-    console.error('GitHub user validation error:', parsed.error);
+  const result = githubUserSchema.safeParse(data);
+  
+  if (!result.success) {
     throw new Error('Invalid GitHub user data');
   }
-  return parsed.data;
+
+  return result.data;
 };
 
 export const useGitHubUser = (): UseGitHubUserReturn => {
   const { data: session } = useSession();
+  const token = session?.user?.token;
 
-  const {
-    data: githubUser,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ['github-user', session?.user?.token],
-    queryFn: () => fetchGitHubUser(session!.user!.token!),
-    enabled: !!session?.user?.token,
+  const query = useQuery({
+    queryKey: ['github-user', token],
+    queryFn: () => fetchGitHubUser(token!),
+    enabled: !!token,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
-    retry: (failureCount, error) => {
-      // Don't retry if it's an authentication error
-      if (error instanceof Error && error.message.includes('401')) {
-        return false;
-      }
-      return failureCount < 3;
-    },
+    gcTime: 10 * 60 * 1000,   // 10 minutes
+    retry: (count, error) => 
+      count < 3 && !error.message.includes('authentication failed'),
   });
 
   return {
-    githubUser: githubUser || null,
-    isLoading,
-    error: error as Error | null,
-    refetch,
+    githubUser: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error,
+    refetch: query.refetch,
   };
-}; 
+};
