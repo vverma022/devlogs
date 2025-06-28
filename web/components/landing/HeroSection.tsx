@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import TaskBoard from './TaskBoard';
 import { Github, Activity, TrendingUp } from 'lucide-react';
-import { RainbowButton } from '@/components/magicui/rainbow-button';
-import GithubConnectDialog from '../common/GithubConnectDialog';
+import AuthButton from '../common/AuthButton';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,13 +42,7 @@ const HeroSection = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 items-center">
-          <GithubConnectDialog
-            trigger={
-              <RainbowButton size="lg" className="gap-2 text-white dark:text-black">
-                Get Started
-              </RainbowButton>
-            }
-          />
+          <AuthButton />
         </div>
         
         <div className="pt-6 text-sm text-muted-foreground font-mono">

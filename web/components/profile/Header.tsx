@@ -9,7 +9,10 @@ import Link from "next/link"
 
 export function ProfileHeader() {
   const { data: session } = useSession()
+  console.log(session)
   const { githubUser } = useGitHubUser()
+
+  console.log(githubUser)
 
   const name = githubUser?.name || session?.user?.name || ""
   const username = githubUser?.login || session?.user?.email?.split("@")[0] || ""
